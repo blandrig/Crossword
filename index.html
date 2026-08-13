@@ -30,6 +30,20 @@
   <div id="toast" class="toast" role="status"></div>
   <div id="cluePopup" class="clue-popup" role="status"><small></small><strong></strong></div>
   <script src="app.js?v=11"></script>
+  <script>
+    (function () {
+      const popup = document.getElementById('cluePopup');
+      if (!popup || !window.visualViewport) return;
+      function movePopupAboveKeyboard() {
+        const keyboardHeight = Math.max(0, window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop);
+        popup.style.bottom = `${keyboardHeight + 16}px`;
+      }
+      window.visualViewport.addEventListener('resize', movePopupAboveKeyboard);
+      window.visualViewport.addEventListener('scroll', movePopupAboveKeyboard);
+      window.addEventListener('resize', movePopupAboveKeyboard);
+      movePopupAboveKeyboard();
+    })();
+  </script>
   <script>const cellsNow=document.querySelectorAll('.cell');const d16Number=cellsNow[69]?.querySelector('.cell-number');if(d16Number)d16Number.textContent='17';[['R2',43],['R6',44],['R15',45]].forEach(([key,number])=>{const index=17*18+Number(key.slice(1))-1;const label=cellsNow[index]?.querySelector('.cell-number');if(label)label.textContent=number});</script>
 </body>
 </html>
