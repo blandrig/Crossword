@@ -35,12 +35,16 @@
       const popup = document.getElementById('cluePopup');
       if (!popup || !window.visualViewport) return;
       function movePopupAboveKeyboard() {
-        const keyboardHeight = Math.max(0, window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop);
-        popup.style.bottom = `${keyboardHeight + 16}px`;
+        const viewport = window.visualViewport;
+        const visibleBottom = viewport.offsetTop + viewport.height;
+        const popupHeight = popup.getBoundingClientRect().height || 56;
+        popup.style.bottom = 'auto';
+        popup.style.top = `${Math.max(12, visibleBottom - popupHeight - 16)}px`;
       }
       window.visualViewport.addEventListener('resize', movePopupAboveKeyboard);
       window.visualViewport.addEventListener('scroll', movePopupAboveKeyboard);
       window.addEventListener('resize', movePopupAboveKeyboard);
+      document.addEventListener('focusin', movePopupAboveKeyboard);
       movePopupAboveKeyboard();
     })();
   </script>
