@@ -41,6 +41,7 @@
       input.setAttribute('spellcheck', 'false');
       input.addEventListener('contextmenu', function (event) { event.preventDefault(); });
       input.addEventListener('selectstart', function (event) { event.preventDefault(); });
+      input.addEventListener('dblclick', function (event) { event.preventDefault(); });
     });
     document.querySelector('#grid').addEventListener('contextmenu', function (event) { event.preventDefault(); });
   </script>
