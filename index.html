@@ -42,6 +42,9 @@
       input.addEventListener('contextmenu', function (event) { event.preventDefault(); });
       input.addEventListener('selectstart', function (event) { event.preventDefault(); });
       input.addEventListener('dblclick', function (event) { event.preventDefault(); });
+      input.addEventListener('touchend', function (event) {
+        if (event.detail > 1) event.preventDefault();
+      }, { passive: false });
     });
     document.querySelector('#grid').addEventListener('contextmenu', function (event) { event.preventDefault(); });
   </script>
