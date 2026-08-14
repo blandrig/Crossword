@@ -20,7 +20,7 @@
     <section class="game-layout row g-3 g-lg-4">
       <div class="puzzle-card col-12 col-lg-7">
         <div class="puzzle-meta"><span><b>DAILY MINI</b> · #042</span><span id="progressText">0 / 31 filled</span></div>
-        <div class="game-footer controls-top"><button class="secondary-btn" id="checkBtn">✓ Check puzzle</button><button class="hint-top-btn" id="hintBtn">💡 Reveal</button><button class="text-btn" id="clearBtn">Clear all</button></div>
+        <div class="game-footer controls-top"><button class="secondary-btn" id="checkBtn">✓ Check puzzle</button><button class="hint-top-btn" id="hintBtn">💡 Reveal</button><button class="text-btn" id="clearBtn">Clear all</button><button class="text-btn" id="howToPlayBtn">How to play</button></div>
         <div class="grid-wrap"><div></div><div id="colLabels" class="col-labels"></div><div id="rowLabels" class="row-labels"></div><div id="grid" class="grid" role="grid" aria-label="18 by 18 crossword grid"></div></div>
       </div>
       <aside class="clues-card col-12 col-lg-5"><div class="tabs"><button class="tab active" data-direction="across">Across</button><button class="tab" data-direction="down">Down</button></div><div id="clues" class="clues"></div></aside>
@@ -29,7 +29,11 @@
   </main>
   <div id="toast" class="toast" role="status"></div>
   <div id="cluePopup" class="clue-popup" role="status"><small></small><strong></strong></div>
+  <div id="howToPlayPopup" class="how-to-play-popup" role="dialog" aria-modal="true" aria-labelledby="howToPlayTitle"><div class="how-to-play-card"><button id="closeHowToPlay" class="how-to-close" aria-label="Close">×</button><h2 id="howToPlayTitle">How to play</h2><p><b>1.</b> One click in any square will pop up the associated clue.</p><p><b>2.</b> Double click in a square to choose the Down option if there is an Across or Down word.</p></div></div>
+  <style>.how-to-play-popup{display:none;position:fixed;inset:0;background:#21332f88;z-index:30;align-items:center;justify-content:center;padding:20px}.how-to-play-popup.show{display:flex}.how-to-play-card{position:relative;max-width:420px;width:100%;background:var(--paper);border-radius:16px;padding:26px;box-shadow:0 14px 40px #21332f44}.how-to-play-card h2{margin:0 0 18px;font-family:'Playfair Display';color:var(--dark)}.how-to-play-card p{font-size:14px;line-height:1.5;margin:12px 0}.how-to-close{position:absolute;right:12px;top:8px;border:0;background:none;font-size:28px;color:var(--muted);cursor:pointer}@media(max-width:575.98px){.how-to-play-card{padding:22px 18px}.how-to-play-card p{font-size:13px}}
+  </style>
   <script src="app.js?v=11"></script>
+  <script>const howToPlayPopup=document.querySelector('#howToPlayPopup');document.querySelector('#howToPlayBtn').onclick=()=>howToPlayPopup.classList.add('show');document.querySelector('#closeHowToPlay').onclick=()=>howToPlayPopup.classList.remove('show');howToPlayPopup.onclick=e=>{if(e.target===howToPlayPopup)howToPlayPopup.classList.remove('show')};</script>
   <script>
     (function () {
       const popup = document.getElementById('cluePopup');
