@@ -33,6 +33,22 @@
   <style>.how-to-play-popup{display:none;position:fixed;inset:0;background:#21332f88;z-index:30;align-items:center;justify-content:center;padding:20px}.how-to-play-popup.show{display:flex}.how-to-play-card{position:relative;max-width:420px;width:100%;background:var(--paper);border-radius:16px;padding:26px;box-shadow:0 14px 40px #21332f44}.how-to-play-card h2{margin:0 0 18px;font-family:'Playfair Display';color:var(--dark)}.how-to-play-card p{font-size:14px;line-height:1.5;margin:12px 0}.how-to-close{position:absolute;right:12px;top:8px;border:0;background:none;font-size:28px;color:var(--muted);cursor:pointer}@media(max-width:575.98px){.how-to-play-card{padding:22px 18px}.how-to-play-card p{font-size:13px}}
   </style>
   <script src="app.js?v=13"></script>
+  <script>
+    let lastCrosswordSquare = null;
+    document.addEventListener('focusin', function (event) {
+      if (event.target.matches('#grid input:not(:disabled)')) lastCrosswordSquare = event.target;
+    });
+    document.querySelector('#hintBtn').onclick = function () {
+      const current = lastCrosswordSquare;
+      if (!current) {
+        if (typeof showCheckPopup === 'function') showCheckPopup('Select a square first');
+        return;
+      }
+      current.value = current.dataset.answer || '';
+      current.dispatchEvent(new Event('input', { bubbles: true }));
+      if (typeof showCheckPopup === 'function') showCheckPopup('Letter revealed');
+    };
+  </script>
   <script>const howToPlayPopup=document.querySelector('#howToPlayPopup');document.querySelector('#howToPlayBtn').onclick=()=>howToPlayPopup.classList.add('show');document.querySelector('#closeHowToPlay').onclick=()=>howToPlayPopup.classList.remove('show');howToPlayPopup.onclick=e=>{if(e.target===howToPlayPopup)howToPlayPopup.classList.remove('show')};</script>
   <script>
     (function () {
