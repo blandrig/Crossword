@@ -7,8 +7,20 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="responsive.css">
-  <style>.cell.selected{background:#e7f3eb}.cell.block.selected{background:var(--ink)}.cell{position:relative;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}.cell-number{position:absolute;top:1px;left:2px;font-size:8px;line-height:1;color:var(--dark);z-index:2;pointer-events:none}.cell.block .cell-number{color:#fff}#grid .cell input,#grid .cell input:focus,#grid .cell.correct input{color:#21332f!important;background:transparent!important}.cell.wrong,.cell.wrong input{background:#e99a83!important;color:#21332f!important}.controls-top{margin:0 0 14px;justify-content:flex-start;gap:10px}.hint-top-btn{border:0;background:#f9e9b8;color:#7f6523;border-radius:8px;padding:10px 13px;min-height:44px;font-weight:600}.row-labels,.col-labels{display:none}.grid-wrap{display:block}</style>
+  <style>.brand,.brand em,.brand-mark{color:#000}.hero{background:#000}.hero h1,.hero h1 span{color:#1ed760}.cell.selected{background:#e7f3eb}.cell.block.selected{background:var(--ink)}.cell{position:relative;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}.cell-number{position:absolute;top:1px;left:2px;font-size:8px;line-height:1;color:var(--dark);z-index:2;pointer-events:none}.cell.block .cell-number{color:#fff}#grid .cell input,#grid .cell input:focus,#grid .cell.correct input{color:#21332f!important;background:transparent!important}.cell.wrong,.cell.wrong input{background:#e99a83!important;color:#21332f!important}.controls-top{margin:0 0 14px;justify-content:flex-start;gap:10px}.hint-top-btn{border:0;background:#f9e9b8;color:#7f6523;border-radius:8px;padding:10px 13px;min-height:44px;font-weight:600}.row-labels,.col-labels{display:none}.grid-wrap{display:block}</style>
   <style>.clue-popup{position:fixed;left:50%;bottom:24px;transform:translate(-50%,14px);background:#21332f;color:#fff;padding:12px 16px;border-radius:12px;box-shadow:0 8px 24px #21332f33;opacity:0;pointer-events:none;transition:.2s;z-index:20;min-width:220px;text-align:center}.clue-popup.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}.clue-popup small{display:block;color:#b7d9c8;font-size:10px;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}.clue-popup strong{font-size:14px;font-weight:500}</style>
+<style>
+  .topbar .brand{margin-left:24px}
+  .hero{position:relative;background:#000}
+  .hero>div{margin-left:24px}
+  .controls-top .secondary-btn,.controls-top .hint-top-btn,.controls-top .text-btn{background:#1ed760;color:#000;border:0;border-radius:10px;padding:12px 18px;min-height:44px;font-weight:600;text-decoration:none}
+  .controls-top{justify-content:center}
+  .hero h1,.hero h1 span{color:#1ed760}
+  .hero h1 span{font-style:normal}
+  .hero .eyebrow,.hero .subhead{color:#fff}
+  .spotify-hero-logo{position:absolute;top:50%;right:28px;transform:translateY(-50%);width:96px;height:96px;object-fit:contain}
+  @media(max-width:575.98px){.spotify-hero-logo{width:64px;height:64px;right:10px}.hero{padding-right:82px}}
+</style>
 </head>
 <body>
   <main class="app-shell container-fluid">
@@ -16,7 +28,7 @@
       <div class="brand"><span class="brand-mark">✦</span> Crossword <em>Rock and Roll</em></div>
       <div class="top-actions">☀ <strong>3 day streak</strong> <button class="icon-btn" id="settingsBtn" aria-label="Settings">⚙</button></div>
     </header>
-    <section class="hero"><div><p class="eyebrow">TUESDAY, AUGUST 4</p><h1>Try your hand at<br><span>music trivia.</span></h1><p class="subhead">Music Mayhem</p></div></section>
+    <section class="hero"><div><p class="eyebrow">TUESDAY, AUGUST 4</p><h1>Try your hand at<br><span>music trivia.</span></h1><p class="subhead">Music Mayhem</p></div><img class="spotify-hero-logo" src="Spotify_logo_without_text.png" alt="Spotify"></section>
     <section class="game-layout row g-3 g-lg-4">
       <div class="puzzle-card col-12 col-lg-7">
         <div class="puzzle-meta"><span><b>DAILY MINI</b> · #042</span><span id="progressText">0 / 31 filled</span></div>
@@ -28,9 +40,10 @@
     <p class="tiny-note">Your progress is saved on this device · <button id="newPuzzleBtn">New puzzle</button></p>
   </main>
   <div id="toast" class="toast" role="status"></div>
+  <div id="directionChooser" class="direction-chooser" role="dialog" aria-label="Choose clue direction"><span>Choose direction</span><button data-direction="across">Across</button><button data-direction="down">Down</button></div>
   <div id="cluePopup" class="clue-popup" role="status"><small></small><strong></strong><a id="spotifyLink" class="spotify-link" data-track-id="6lFZbCc7pn6Lme1NP7qQqQ" href="https://open.spotify.com/track/6lFZbCc7pn6Lme1NP7qQqQ" target="_blank" rel="noopener">♫ Listen on Spotify</a></div>
   <div id="howToPlayPopup" class="how-to-play-popup" role="dialog" aria-modal="true" aria-labelledby="howToPlayTitle"><div class="how-to-play-card"><button id="closeHowToPlay" class="how-to-close" aria-label="Close">×</button><h2 id="howToPlayTitle">How to play</h2><p><b>1.</b> One click in any square will pop up the associated clue.</p><p><b>2.</b> Double click in a square to choose the Down option if there is an Across or Down word.</p></div></div>
-  <style>.cell.complete,.cell.complete.selected{background:#f4d27f}.spotify-link{display:none;margin-top:10px;padding:8px 12px;background:#1db954;color:#fff;border-radius:999px;text-decoration:none;font-size:12px;font-weight:700}.spotify-link.show{display:inline-block}.how-to-play-popup{display:none;position:fixed;inset:0;background:#21332f88;z-index:30;align-items:center;justify-content:center;padding:20px}.how-to-play-popup.show{display:flex}.how-to-play-card{position:relative;max-width:420px;width:100%;background:var(--paper);border-radius:16px;padding:26px;box-shadow:0 14px 40px #21332f44}.how-to-play-card h2{margin:0 0 18px;font-family:'Playfair Display';color:var(--dark)}.how-to-play-card p{font-size:14px;line-height:1.5;margin:12px 0}.how-to-close{position:absolute;right:12px;top:8px;border:0;background:none;font-size:28px;color:var(--muted);cursor:pointer}@media(max-width:575.98px){.how-to-play-card{padding:22px 18px}.how-to-play-card p{font-size:13px}}
+  <style>.direction-chooser{display:none;position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:25;background:#000;color:#fff;padding:10px;border-radius:12px;gap:8px;align-items:center;box-shadow:0 8px 24px #0004}.direction-chooser.show{display:flex}.direction-chooser span{font-size:12px;margin:0 4px}.direction-chooser button{background:#1ed760;color:#000;border:0;border-radius:8px;padding:9px 12px;font-weight:600}.cell.complete,.cell.complete.selected{background:#f4d27f}.spotify-link{display:none;margin-top:10px;padding:8px 12px;background:#1db954;color:#fff;border-radius:999px;text-decoration:none;font-size:12px;font-weight:700}.spotify-link.show{display:inline-block}.how-to-play-popup{display:none;position:fixed;inset:0;background:#21332f88;z-index:30;align-items:center;justify-content:center;padding:20px}.how-to-play-popup.show{display:flex}.how-to-play-card{position:relative;max-width:420px;width:100%;background:var(--paper);border-radius:16px;padding:26px;box-shadow:0 14px 40px #21332f44}.how-to-play-card h2{margin:0 0 18px;font-family:'Playfair Display';color:var(--dark)}.how-to-play-card p{font-size:14px;line-height:1.5;margin:12px 0}.how-to-close{position:absolute;right:12px;top:8px;border:0;background:none;font-size:28px;color:var(--muted);cursor:pointer}@media(max-width:575.98px){.direction-chooser{bottom:16px;max-width:calc(100vw - 24px);width:max-content}.how-to-play-card{padding:22px 18px}.how-to-play-card p{font-size:13px}}
   </style>
   <script src="app.js?v=18"></script>
   <script>
