@@ -19,7 +19,6 @@
   .controls-top .secondary-btn,.controls-top .hint-top-btn,.controls-top .text-btn{background:#1ed760;color:#000;border:0;border-radius:10px;width:120px;height:44px;padding:8px 10px;font-size:13px;line-height:1;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
   .controls-top{justify-content:center}
   .cell.complete,.cell.complete.selected{background:#f4d27f!important}
-  .cell.word-zoom{transform:scale(1.22);position:relative;z-index:6;box-shadow:0 0 0 2px #1ed760;transition:transform .2s ease}
   .game-layout{display:flex;flex-direction:column}.puzzle-card,.clues-card{width:100%}.clues{max-height:34vh;overflow-y:auto}
   @media(min-width:801px){.grid{width:min(100%,900px);margin-inline:auto}.puzzle-card{padding:32px 42px}}
   .hero h1,.hero h1 span{color:#1ed760}
@@ -54,32 +53,6 @@
   <style>.direction-chooser{display:none;position:fixed;left:50%;bottom:24px;transform:translate(-50%,14px);z-index:25;background:#21332f;color:#fff;padding:10px 12px;border-radius:12px;gap:6px;align-items:center;box-shadow:0 8px 24px #21332f33;min-width:190px;justify-content:center;text-align:center;opacity:0;transition:.2s}.direction-chooser.show{display:flex;opacity:1;transform:translate(-50%,0)}.direction-chooser span{font-size:11px;margin:0 3px}.direction-chooser button{background:#1ed760;color:#000;border:0;border-radius:7px;padding:7px 9px;font-size:11px;font-weight:600}.cell.complete,.cell.complete.selected{background:#f4d27f}.spotify-link{display:none;margin-top:10px;padding:8px 12px;background:#1db954;color:#fff;border-radius:999px;text-decoration:none;font-size:12px;font-weight:700}.spotify-link.show{display:inline-block}.how-to-play-popup{display:none;position:fixed;inset:0;background:#21332f88;z-index:30;align-items:center;justify-content:center;padding:20px}.how-to-play-popup.show{display:flex}.how-to-play-card{position:relative;max-width:420px;width:100%;background:var(--paper);border-radius:16px;padding:26px;box-shadow:0 14px 40px #21332f44}.how-to-play-card h2{margin:0 0 18px;font-family:'Playfair Display';color:var(--dark)}.how-to-play-card p{font-size:14px;line-height:1.5;margin:12px 0}.how-to-close{position:absolute;right:12px;top:8px;border:0;background:none;font-size:28px;color:var(--muted);cursor:pointer}@media(max-width:575.98px){.direction-chooser{bottom:16px;max-width:calc(100vw - 24px);width:max-content}.how-to-play-card{padding:22px 18px}.how-to-play-card p{font-size:13px}}
   </style>
   <script src="app.js?v=20"></script>
-  <script>
-    (function () {
-      const cluePopup = document.getElementById('cluePopup');
-      let wasVisible = cluePopup.classList.contains('show');
-      function activeWord(index, direction) {
-        const step = direction === 'down' ? 18 : 1;
-        let start = index;
-        if (step === 1) while (start % 18 > 0 && !cells[start - 1].disabled) start--;
-        else while (start >= 18 && !cells[start - 18].disabled) start -= 18;
-        const result = [];
-        for (let i = start; i < cells.length && !cells[i].disabled && (step === 18 || i % 18 !== 0 || i === start); i += step) result.push(i);
-        return result;
-      }
-      function zoomActiveWord() { activeWord(activeIndex, selectionDirection).forEach(i => cells[i].parentElement.classList.add('word-zoom')); }
-      function clearZoom() { cells.forEach(cell => cell.parentElement.classList.remove('word-zoom')); }
-      new MutationObserver(function () {
-        const visible = cluePopup.classList.contains('show');
-        if (wasVisible && !visible) zoomActiveWord();
-        wasVisible = visible;
-      }).observe(cluePopup, { attributes: true, attributeFilter: ['class'] });
-      document.querySelectorAll('#grid input').forEach(input => input.addEventListener('input', function () {
-        const word = activeWord(Number(input.dataset.index), selectionDirection);
-        if (word.length > 1 && word.every(i => cells[i].value)) clearZoom();
-      }));
-    })();
-  </script>
   <script>
     (function () {
       let startingScrollY = 0;
