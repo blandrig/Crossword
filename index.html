@@ -115,11 +115,6 @@
         const popupHeight = popup.getBoundingClientRect().height || 56;
         popup.style.bottom = 'auto';
         popup.style.top = `${Math.max(12, visibleBottom - popupHeight - 16)}px`;
-        if (chooser) {
-          const chooserHeight = chooser.getBoundingClientRect().height || 44;
-          chooser.style.bottom = 'auto';
-          chooser.style.top = `${Math.max(12, visibleBottom - chooserHeight - 16)}px`;
-        }
       }
       window.visualViewport.addEventListener('resize', movePopupAboveKeyboard);
       window.visualViewport.addEventListener('scroll', movePopupAboveKeyboard);
