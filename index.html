@@ -55,6 +55,27 @@
   <script src="app.js?v=20"></script>
   <script>
     (function () {
+      let startingScrollY = 0;
+      document.addEventListener('focusin', function (event) {
+        if (event.target.matches('#grid input:not(:disabled)')) startingScrollY = window.scrollY;
+      });
+      document.querySelectorAll('#grid input').forEach(function (input) {
+        input.addEventListener('input', function () {
+          const step = selectionDirection === 'down' ? 18 : 1;
+          let start = Number(input.dataset.index);
+          if (step === 1) while (start % 18 > 0 && !cells[start - 1].disabled) start--;
+          else while (start >= 18 && !cells[start - 18].disabled) start -= 18;
+          const word = [];
+          for (let i = start; i < cells.length && !cells[i].disabled && (step === 18 || i % 18 !== 0 || i === start); i += step) word.push(cells[i]);
+          if (word.length > 1 && word.every(cell => cell.value)) {
+            window.setTimeout(() => window.scrollTo({ top: startingScrollY, behavior: 'smooth' }), 100);
+          }
+        });
+      });
+    })();
+  </script>
+  <script>
+    (function () {
       const completionPopup = document.getElementById('completionPopup');
       let completionShown = false;
       function checkCompletion() {
