@@ -53,6 +53,19 @@
   </style>
   <script src="app.js?v=19"></script>
   <script>
+    document.addEventListener('dblclick', function (event) {
+      const cell = event.target.closest('#grid .cell');
+      if (!cell) return;
+      const input = cell.querySelector('input');
+      if (!input || input.disabled) return;
+      event.preventDefault();
+      activeIndex = Number(input.dataset.index);
+      lastClickedIndex = activeIndex;
+      document.querySelector('#directionChooser')?.classList.remove('show');
+      highlight();
+    });
+  </script>
+  <script>
     document.addEventListener('focusin', function (event) {
       if (event.target.matches('#grid input')) document.querySelector('#directionChooser')?.classList.remove('show');
     });
